@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="@color/accent"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/tagline"
+            android:textColor="@color/text_secondary"
+            android:textSize="15sp" />
+
+        <!-- Permissions -->
+        <TextView
+            style="@style/SectionTitle"
+            android:text="@string/section_setup" />
+
+        <LinearLayout style="@style/Card">
+
+            <TextView
+                style="@style/RowTitle"
+                android:text="@string/perm_overlay" />
+
+            <TextView
+                android:id="@+id/overlay_status"
+                style="@style/RowStatus" />
+
+            <Button
+                android:id="@+id/overlay_button"
+                style="@style/ActionButton"
+                android:text="@string/grant" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/Card">
+
+            <TextView
+                style="@style/RowTitle"
+                android:text="@string/perm_access" />
+
+            <TextView
+                style="@style/RowHint"
+                android:text="@string/perm_access_hint" />
+
+            <TextView
+                android:id="@+id/access_status"
+                style="@style/RowStatus" />
+
+            <Button
+                android:id="@+id/access_button"
+                style="@style/ActionButton"
+                android:text="@string/enable" />
+
+            <TextView
+                style="@style/RowHint"
+                android:text="@string/restricted_hint" />
+
+            <Button
+                android:id="@+id/app_info_button"
+                style="@style/ActionButton"
+                android:text="@string/open_app_info" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/notif_row"
+            style="@style/Card">
+
+            <TextView
+                style="@style/RowTitle"
+                android:text="@string/perm_notif" />
+
+            <TextView
+                android:id="@+id/notif_status"
+                style="@style/RowStatus" />
+
+            <Button
+                android:id="@+id/notif_button"
+                style="@style/ActionButton"
+                android:text="@string/grant" />
+        </LinearLayout>
+
+        <!-- Bubble -->
+        <TextView
+            style="@style/SectionTitle"
+            android:text="@string/section_bubble" />
+
+        <LinearLayout style="@style/Card">
+
+            <Button
+                android:id="@+id/toggle_bubble"
+                style="@style/ActionButton"
+                android:text="@string/show_bubble" />
+
+            <Switch
+                android:id="@+id/boot_switch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/start_at_boot"
+                android:textColor="@color/text_primary"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <!-- Try it -->
+        <TextView
+            style="@style/SectionTitle"
+            android:text="@string/section_try" />
+
+        <LinearLayout style="@style/Card">
+
+            <EditText
+                android:id="@+id/try_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/try_hint"
+                android:inputType="text"
+                android:text="@string/try_sample"
+                android:textColor="@color/text_primary" />
+
+            <Button
+                android:id="@+id/try_button"
+                style="@style/ActionButton"
+                android:text="@string/try_button" />
+        </LinearLayout>
+
+        <!-- Rates -->
+        <TextView
+            style="@style/SectionTitle"
+            android:text="@string/section_rates" />
+
+        <LinearLayout style="@style/Card">
+
+            <TextView
+                android:id="@+id/rate_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="4dp"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/refresh_rate"
+                style="@style/ActionButton"
+                android:text="@string/refresh_rate" />
+        </LinearLayout>
+
+        <!-- How to -->
+        <TextView
+            style="@style/SectionTitle"
+            android:text="@string/section_howto" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="4dp"
+            android:text="@string/howto"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp" />
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Convertisseur Instantané</string>
+    <string name="tagline">Sélectionnez un prix en euros ou en dollars sur n\'importe quelle page web : la bulle l\'affiche aussitôt en francs CFA.</string>
+    <string name="process_text_label">Convertir en FCFA</string>
+
+    <string name="section_setup">Configuration</string>
+    <string name="perm_overlay">1. Affichage par-dessus les autres applis</string>
+    <string name="perm_access">2. Détection automatique du texte sélectionné</string>
+    <string name="perm_access_hint">Activez « Convertisseur Instantané » dans Paramètres › Accessibilité pour que la bulle réagisse dès que vous sélectionnez un montant. Rien n\'est collecté ni envoyé.</string>
+    <string name="restricted_hint">Si Android indique que le paramètre est restreint (appli installée depuis un APK) : ouvrez Infos sur l\'appli, touchez ⋮ › « Autoriser les paramètres restreints », puis revenez.</string>
+    <string name="open_app_info">Infos sur l\'appli</string>
+    <string name="perm_notif">3. Notification (maintient la bulle active)</string>
+    <string name="status_granted">✓ Autorisé</string>
+    <string name="status_missing">✗ Non autorisé</string>
+    <string name="status_enabled">✓ Activée</string>
+    <string name="status_disabled">✗ Désactivée</string>
+    <string name="grant">Autoriser</string>
+    <string name="enable">Activer</string>
+
+    <string name="section_bubble">Bulle</string>
+    <string name="show_bubble">Afficher la bulle</string>
+    <string name="hide_bubble">Masquer la bulle</string>
+    <string name="start_at_boot">Afficher la bulle au démarrage du téléphone</string>
+
+    <string name="section_try">Essayer</string>
+    <string name="try_hint">Montant, ex. 49,99 € ou 120 $</string>
+    <string name="try_sample">49,99 €</string>
+    <string name="try_button">Convertir dans la bulle</string>
+    <string name="need_overlay">Autorisez d\'abord « Affichage par-dessus les autres applis ».</string>
+
+    <string name="section_rates">Taux de change</string>
+    <string name="rate_fixed">parité fixe</string>
+    <string name="rate_default">taux approximatif, pas encore mis à jour</string>
+    <string name="rate_updated">mis à jour %1$s</string>
+    <string name="rate_updating">Mise à jour…</string>
+    <string name="refresh_rate">Mettre à jour le taux du dollar</string>
+
+    <string name="section_howto">Mode d\'emploi</string>
+    <string name="howto">• La bulle se place dans un coin de l\'écran. Faites-la glisser pour la déplacer : elle se range dans le coin le plus proche.\n• Sur une page web, sélectionnez un montant (« 49,99 € », « 1 299 $ », « 15 euros »…) : la bulle s\'agrandit et affiche le montant en FCFA.\n• Touchez n\'importe où en dehors de la bulle pour la fermer : elle se range dans son coin.\n• Appui long sur le résultat pour le copier.\n• Sans la détection automatique, sélectionnez le montant puis choisissez « Convertir en FCFA » dans le menu de sélection (⋮).</string>
+
+    <string name="notification_channel">Bulle flottante</string>
+    <string name="notification_text">La bulle est active. Sélectionnez un montant pour le convertir.</string>
+    <string name="notification_stop">Arrêter</string>
+
+    <string name="no_amount">Aucun montant trouvé</string>
+    <string name="no_amount_hint">Sélectionnez un prix en € ou en $</string>
+    <string name="unknown_currency">Devise non précisée</string>
+    <string name="idle_title">Sélectionnez un montant</string>
+    <string name="idle_hint">en € ou en $ sur n\'importe quelle page</string>
+    <string name="copied">Copié : %1$s</string>
+
+    <string name="accessibility_description">Détecte les montants en euros ou en dollars que vous sélectionnez dans n\'importe quelle appli (navigateur web, etc.) et affiche leur valeur en francs CFA dans la bulle flottante. Seul le texte sélectionné est lu, localement ; rien n\'est enregistré ni envoyé.</string>
+</resources>
