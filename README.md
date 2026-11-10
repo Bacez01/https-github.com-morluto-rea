@@ -37,3 +37,42 @@ sélectionnez-le et choisissez **Convertir en FCFA** dans le menu de sélection 
 - Kotlin, aucune dépendance en dehors du SDK Android. `minSdk 26`, `targetSdk 35`.
 - Tests unitaires : `./gradlew testDebugUnitTest`.
 - L'interface est en français sur un téléphone en français, en anglais sinon.
+
+---
+
+# Version Windows 11
+
+Le dossier `windows/` contient l'équivalent pour PC : une bulle flottante
+toujours au premier plan, dans un coin de l'écran, avec une icône dans la zone de
+notification (à côté de l'horloge).
+
+## Utilisation
+
+- **Sélectionnez un prix** (glisser avec la souris ou double-clic) dans Chrome, Edge,
+  Firefox, Opera, Brave… : la bulle s'agrandit et affiche le montant en FCFA.
+  L'appli fait elle-même un Ctrl+C sur la sélection puis **remet votre presse-papiers
+  comme avant** (option « Résultat immédiat dans les navigateurs »).
+- Dans les autres logiciels (Word, lecteur PDF…), la sélection est lue avec
+  l'automatisation de l'interface Windows (UI Automation), quand le logiciel le permet.
+- **Ctrl+C** sur un montant, n'importe où : la bulle affiche la conversion
+  (option « Convertir ce que je copie »).
+- **Clic n'importe où ailleurs** : la bulle se referme et se range dans son coin.
+- **Glisser la bulle** : elle se range dans le coin le plus proche (sur n'importe quel écran).
+- **Clic sur le résultat** : copie le montant en FCFA. **Clic droit** sur la bulle : options.
+- Au premier lancement, l'appli s'ajoute au démarrage de Windows (désactivable).
+
+Réglages et taux en cache : `%APPDATA%\InstantConverter\settings.json`.
+
+## Récupérer le programme
+
+Onglet **Actions** → « Build Windows app » → artefact `instant-converter-windows`
+→ `InstantConverter.exe` (un seul fichier, aucune installation de .NET nécessaire).
+
+Le programme n'est pas signé : Windows SmartScreen affiche « Windows a protégé votre
+ordinateur » au premier lancement → **Informations complémentaires** → **Exécuter quand même**.
+
+## Développement
+
+- C# / WPF, .NET 8. Moteur de conversion partagé et testé : `windows/InstantConverter.Core`.
+- Tests : `dotnet test windows/InstantConverter.Core.Tests`.
+- Programme : `dotnet publish windows/InstantConverter -c Release -r win-x64 --self-contained -p:PublishSingleFile=true`.
