@@ -10,7 +10,7 @@ Touchez n'importe où en dehors de la bulle : elle se referme et se range dans s
 | Élément | Rôle |
 |---|---|
 | `BubbleService` | Service au premier plan qui dessine la bulle par-dessus les autres applis. Glisser-déposer, aimantation au coin le plus proche, agrandissement animé, fermeture au toucher extérieur (`FLAG_WATCH_OUTSIDE_TOUCH`), appui long pour copier le résultat. |
-| `SelectionAccessibilityService` | Détecte automatiquement le texte sélectionné (Chrome, Firefox, etc.) et envoie le montant à la bulle. |
+| `SelectionAccessibilityService` | Détecte le texte sélectionné. Dans les champs de saisie, Android transmet la sélection directement. Sur les pages web, les navigateurs ne la transmettent pas : dès que la barre « Copier / Partager » apparaît, le service appuie sur « Copier » et la bulle convertit le texte copié (option « Résultat immédiat », désactivable). |
 | `ProcessTextActivity` | Ajoute « Convertir en FCFA » dans le menu de sélection de texte de toutes les applis (solution de secours sans accessibilité). |
 | `AmountParser` | Reconnaît `49,99 €`, `€49.99`, `1 299,00 EUR`, `$1,299.99`, `USD 15`, `12€50`, `1.234,56 €`, `2,5 M€`, `$3k`, `15 euros`, `20 dollars`… |
 | `RateRepository` | EUR → XOF : parité fixe **655,957**. USD → XOF : téléchargé depuis `open.er-api.com` (gratuit, sans clé), mis en cache, actualisé toutes les 6 h. |

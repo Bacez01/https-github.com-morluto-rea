@@ -92,6 +92,13 @@ class MainActivity : Activity() {
             getSharedPreferences(PREFS, MODE_PRIVATE).edit().putBoolean(KEY_BOOT, checked).apply()
         }
 
+        val autoCopy = view<Switch>(R.id.auto_copy_switch)
+        autoCopy.isChecked = SelectionAccessibilityService.autoCopyEnabled(this)
+        autoCopy.setOnCheckedChangeListener { _, checked ->
+            getSharedPreferences(PREFS, MODE_PRIVATE).edit()
+                .putBoolean(SelectionAccessibilityService.KEY_AUTO_COPY, checked).apply()
+        }
+
         val input = view<EditText>(R.id.try_input)
         view<Button>(R.id.try_button).setOnClickListener {
             val text = input.text.toString()

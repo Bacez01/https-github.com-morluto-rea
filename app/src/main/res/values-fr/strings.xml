@@ -10,6 +10,8 @@
     <string name="perm_access_hint">Activez « Convertisseur Instantané » dans Paramètres › Accessibilité pour que la bulle réagisse dès que vous sélectionnez un montant. Rien n\'est collecté ni envoyé.</string>
     <string name="restricted_hint">Si Android indique que le paramètre est restreint (appli installée depuis un APK) : ouvrez Infos sur l\'appli, touchez ⋮ › « Autoriser les paramètres restreints », puis revenez.</string>
     <string name="open_app_info">Infos sur l\'appli</string>
+    <string name="auto_copy">Résultat immédiat sur les pages web</string>
+    <string name="auto_copy_hint">Les navigateurs ne signalent pas aux autres applis ce que vous sélectionnez sur une page. Avec cette option, dès que la barre « Copier / Partager » apparaît, l\'appli appuie sur « Copier » à votre place et la bulle affiche le résultat. Le texte sélectionné est donc placé dans le presse-papiers.</string>
     <string name="perm_notif">3. Notification (maintient la bulle active)</string>
     <string name="status_granted">✓ Autorisé</string>
     <string name="status_missing">✗ Non autorisé</string>
@@ -50,5 +52,5 @@
     <string name="idle_hint">ou copiez-le puis touchez la bulle</string>
     <string name="copied">Copié : %1$s</string>
 
-    <string name="accessibility_description">Détecte les montants en euros ou en dollars que vous sélectionnez dans n\'importe quelle appli (navigateur web, etc.) et affiche leur valeur en francs CFA dans la bulle flottante. Seul le texte sélectionné est lu, localement ; rien n\'est enregistré ni envoyé.</string>
+    <string name="accessibility_description">Détecte les montants en euros ou en dollars que vous sélectionnez dans n\'importe quelle appli (navigateur web, etc.) et affiche leur valeur en francs CFA dans la bulle flottante. Dans les navigateurs, elle appuie sur « Copier » de la barre de sélection pour lire le texte choisi (désactivable dans l\'appli). Le texte est lu localement ; rien n\'est enregistré ni envoyé.</string>
 </resources>

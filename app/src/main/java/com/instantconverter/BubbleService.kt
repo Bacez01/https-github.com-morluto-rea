@@ -521,20 +521,35 @@ class BubbleService : Service() {
         }
     }
 
+    private fun isConvertible(clip: String?): Boolean =
+        clip != null && !Regex("""(?i)f?cfa|xof""").containsMatchIn(clip) &&
+            AmountParser.parse(clip, requireCurrency = false) != null
+
     private fun onBubbleTapped() {
         // A freshly copied amount wins; otherwise re-open the last conversion,
         // or a short help card.
         readClipboard { clip ->
-            val usable = clip != null && clip != lastClipboardText &&
-                !Regex("""(?i)f?cfa|xof""").containsMatchIn(clip) &&
-                AmountParser.parse(clip, requireCurrency = false) != null
             when {
-                usable -> {
+                clip != lastClipboardText && isConvertible(clip) -> {
                     lastClipboardText = clip
                     showConversion(clip!!, explicit = true)
                 }
                 tvResult.text.isNullOrEmpty() -> showIdleCard()
                 else -> expand()
+            }
+        }
+    }
+
+    /**
+     * Called by the accessibility service right after it pressed "Copy" in a
+     * browser's selection toolbar: converts what was just copied, and stays
+     * quiet when the selection holds no amount.
+     */
+    fun convertClipboard() {
+        readClipboard { clip ->
+            if (isConvertible(clip)) {
+                lastClipboardText = clip
+                showConversion(clip!!, explicit = true)
             }
         }
     }

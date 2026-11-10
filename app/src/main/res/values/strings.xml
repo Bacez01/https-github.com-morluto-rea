@@ -11,6 +11,8 @@
     <string name="perm_access_hint">Turns on \"Instant Converter\" in Settings › Accessibility so the bubble reacts as soon as you select an amount. Nothing is collected or sent anywhere.</string>
     <string name="restricted_hint">If Android says the setting is restricted (app installed from an APK): open App info, tap ⋮ › \"Allow restricted settings\", then come back.</string>
     <string name="open_app_info">App info</string>
+    <string name="auto_copy">Instant result on web pages</string>
+    <string name="auto_copy_hint">Browsers don\'t tell other apps what you select on a page. With this option, as soon as the \"Copy / Share\" bar appears, the app presses \"Copy\" for you and the bubble shows the result. What you select is then placed in the clipboard.</string>
     <string name="perm_notif">3. Notification (keeps the bubble alive)</string>
     <string name="status_granted">✓ Granted</string>
     <string name="status_missing">✗ Not granted</string>
@@ -51,5 +53,5 @@
     <string name="idle_hint">or copy it, then tap the bubble</string>
     <string name="copied">Copied: %1$s</string>
 
-    <string name="accessibility_description">Detects the amounts in euros or dollars that you select in any app (web browser, etc.) and shows their value in CFA francs in the floating bubble. Only the selected text is read, locally; nothing is stored or sent.</string>
+    <string name="accessibility_description">Detects the amounts in euros or dollars that you select in any app (web browser, etc.) and shows their value in CFA francs in the floating bubble. In browsers it presses \"Copy\" in the selection bar to read the chosen text (can be turned off in the app). Text is read locally; nothing is stored or sent.</string>
 </resources>
