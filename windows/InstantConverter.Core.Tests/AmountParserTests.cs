@@ -93,4 +93,29 @@ public class AmountParserTests
         Assert.Equal("49,99 €", Spaces(c.FormatSource(49.99, Currency.EUR)));
         Assert.Equal("1 € = 655,957 FCFA", Spaces(c.FormatRate(Currency.EUR)));
     }
+
+    [Fact]
+    public void ScreenshotPrefersAmountWithCurrency()
+    {
+        var r = AmountParser.FindInScreenshot(new[] { "Réf. 2024-118", "Quantité 2", "Total : 1 299,00 €", "TVA 20 %" });
+        Assert.NotNull(r);
+        Assert.Equal(1299.0, r!.Value.Amount.Value, 4);
+        Assert.Equal(Currency.EUR, r.Value.Amount.Currency);
+    }
+
+    [Fact]
+    public void ScreenshotFixesOcrSpaces()
+    {
+        var r = AmountParser.FindInScreenshot(new[] { "Prix 49, 99 €" });
+        Assert.NotNull(r);
+        Assert.Equal(49.99, r!.Value.Amount.Value, 4);
+    }
+
+    [Fact]
+    public void ScreenshotFallsBackToPriceThenNumber()
+    {
+        Assert.Equal(19.9, AmountParser.FindInScreenshot(new[] { "Article 3", "19,90" })!.Value.Amount.Value, 4);
+        Assert.Equal(3.0, AmountParser.FindInScreenshot(new[] { "Article 3" })!.Value.Amount.Value, 4);
+        Assert.Null(AmountParser.FindInScreenshot(new[] { "Bonjour", "" }));
+    }
 }

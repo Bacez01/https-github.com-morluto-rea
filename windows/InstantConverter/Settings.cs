@@ -11,6 +11,7 @@ internal sealed class AppSettings
     public bool CornerBottom { get; set; } = true;
     public bool AutoCopy { get; set; } = true;
     public bool WatchClipboard { get; set; } = true;
+    public bool ReadScreenshots { get; set; } = true;
     public bool FirstRun { get; set; } = true;
     public double UsdToXof { get; set; } = 565.0;
     public DateTime? RateUpdatedUtc { get; set; }

@@ -54,6 +54,10 @@ notification (à côté de l'horloge).
   comme avant** (option « Résultat immédiat dans les navigateurs »).
 - Dans les autres logiciels (Word, lecteur PDF…), la sélection est lue avec
   l'automatisation de l'interface Windows (UI Automation), quand le logiciel le permet.
+- **Capture d'écran** (Win+Maj+S ou Outil Capture) d'une zone contenant un prix : la bulle
+  lit le texte de l'image avec la reconnaissance de texte intégrée à Windows (hors ligne)
+  et affiche aussitôt la conversion. Les captures de l'écran entier (Impr. écran) sont
+  ignorées (option « Convertir les captures d'écran »).
 - **Ctrl+C** sur un montant, n'importe où : la bulle affiche la conversion
   (option « Convertir ce que je copie »).
 - **Clic n'importe où ailleurs** : la bulle se referme et se range dans son coin.

@@ -28,7 +28,7 @@ internal static class Program
         app.Run();
     }
 
-    private static void Log(Exception ex)
+    public static void Log(Exception ex)
     {
         try
         {

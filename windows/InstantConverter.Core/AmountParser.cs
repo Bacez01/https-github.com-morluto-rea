@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
@@ -109,6 +110,34 @@ public static class AmountParser
         if (withCurrency != null) return withCurrency;
         if (text == null || text.Length > 30 || !PriceLike.IsMatch(text)) return null;
         return Parse(text, requireCurrency: false);
+    }
+
+    // "49, 99" / "49 ,99" as OCR sometimes reads "49,99".
+    private static readonly Regex OcrSeparatorSpaces = new(@"(?<=[0-9])[ \u00A0]*([.,])[ \u00A0]*(?=[0-9]{2}(?![0-9]))");
+
+    /// <summary>Fixes the usual OCR glitches in numbers before parsing.</summary>
+    public static string NormalizeOcr(string text) => OcrSeparatorSpaces.Replace(text, "$1");
+
+    /// <summary>
+    /// Picks the amount to show from text read in a screenshot: the first line
+    /// holding an amount with a currency, else the first price-looking number,
+    /// else any number. Returns the line it was found in.
+    /// </summary>
+    public static (string Line, ParsedAmount Amount)? FindInScreenshot(IEnumerable<string> lines)
+    {
+        var cleaned = new List<string>();
+        foreach (var l in lines)
+        {
+            var t = NormalizeOcr(l).Trim();
+            if (t.Length > 0) cleaned.Add(t);
+        }
+        foreach (var l in cleaned)
+            if (Parse(l) is { } a) return (l, a);
+        foreach (var l in cleaned)
+            if (ParseAutomatic(l) is { } a) return (l, a);
+        foreach (var l in cleaned)
+            if (Parse(l, requireCurrency: false) is { } a) return (l, a);
+        return null;
     }
 
     private static ParsedAmount? ToAmount(Match m)

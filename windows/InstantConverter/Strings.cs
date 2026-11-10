@@ -21,6 +21,12 @@ internal static class L
     public static string MenuHide => T("Masquer la bulle", "Hide the bubble");
     public static string MenuAutoCopy => T("Résultat immédiat dans les navigateurs (copie auto)", "Instant result in browsers (auto-copy)");
     public static string MenuWatchClipboard => T("Convertir ce que je copie (Ctrl+C)", "Convert what I copy (Ctrl+C)");
+    public static string MenuScreenshots => T("Convertir les captures d'écran (Win+Maj+S)", "Convert screenshots (Win+Shift+S)");
+    public static string Screenshot => T("Capture d'écran", "Screenshot");
+    public static string NoAmountInScreenshot => T("Aucun montant lu", "No amount found");
+    public static string NoAmountInScreenshotHint => T("Capturez une zone qui contient un prix", "Capture an area that shows a price");
+    public static string NoOcr => T("Lecture de texte indisponible", "Text recognition unavailable");
+    public static string NoOcrHint => T("Ajoutez la langue Français dans Paramètres › Heure et langue", "Add a language in Settings › Time & language");
     public static string MenuStartup => T("Lancer au démarrage de Windows", "Start with Windows");
     public static string MenuRefresh => T("Mettre à jour le taux du dollar", "Update the dollar rate");
     public static string MenuQuit => T("Quitter", "Quit");
@@ -31,6 +37,6 @@ internal static class L
 
     public static string WelcomeTitle => T("La bulle est prête", "The bubble is ready");
     public static string WelcomeText => T(
-        "Sélectionnez un prix en € ou en $ sur une page web : la bulle affiche le montant en FCFA. Clic droit sur la bulle pour les options.",
-        "Select a price in € or $ on a web page: the bubble shows it in FCFA. Right-click the bubble for options.");
+        "Sélectionnez un prix en € ou en $ sur une page web, ou faites une capture d'écran (Win+Maj+S) : la bulle affiche le montant en FCFA. Clic droit sur la bulle pour les options.",
+        "Select a price in € or $ on a web page, or take a screenshot (Win+Shift+S): the bubble shows it in FCFA. Right-click the bubble for options.");
 }

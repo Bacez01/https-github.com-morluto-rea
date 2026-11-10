@@ -38,6 +38,8 @@ internal sealed class AppController : IDisposable
         autoCopy.CheckedChanged += (_, _) => { _settings.AutoCopy = autoCopy.Checked; _settings.Save(); };
         var watchClip = new WinForms.ToolStripMenuItem(L.MenuWatchClipboard) { CheckOnClick = true, Checked = _settings.WatchClipboard };
         watchClip.CheckedChanged += (_, _) => { _settings.WatchClipboard = watchClip.Checked; _settings.Save(); };
+        var screenshots = new WinForms.ToolStripMenuItem(L.MenuScreenshots) { CheckOnClick = true, Checked = _settings.ReadScreenshots };
+        screenshots.CheckedChanged += (_, _) => { _settings.ReadScreenshots = screenshots.Checked; _settings.Save(); };
         var startup = new WinForms.ToolStripMenuItem(L.MenuStartup) { CheckOnClick = true };
         startup.CheckedChanged += (_, _) => StartupManager.Set(startup.Checked);
         _rateItem = new WinForms.ToolStripMenuItem("") { Enabled = false };
@@ -51,7 +53,7 @@ internal sealed class AppController : IDisposable
         _menu.Items.AddRange(new WinForms.ToolStripItem[]
         {
             _toggleItem, new WinForms.ToolStripSeparator(),
-            autoCopy, watchClip, startup, new WinForms.ToolStripSeparator(),
+            autoCopy, watchClip, screenshots, startup, new WinForms.ToolStripSeparator(),
             _rateItem, refresh, new WinForms.ToolStripSeparator(), quit,
         });
         _menu.Opening += (_, _) =>
@@ -116,16 +118,59 @@ internal sealed class AppController : IDisposable
         return IntPtr.Zero;
     }
 
-    /// <summary>Something was copied (Ctrl+C): convert it when it holds an amount.</summary>
+    /// <summary>
+    /// Something was copied: a screenshot (Win+Shift+S) is read with OCR, a
+    /// text (Ctrl+C) is converted when it holds an amount.
+    /// </summary>
     private async Task OnClipboardChangedAsync()
     {
-        if (!_settings.WatchClipboard || DateTime.UtcNow < _suppressClipboardUntil || !_bubble.IsVisible) return;
+        if (DateTime.UtcNow < _suppressClipboardUntil || !_bubble.IsVisible) return;
         await Task.Delay(60);
         if (DateTime.UtcNow < _suppressClipboardUntil) return;
+
+        if (_settings.ReadScreenshots && await TryConvertScreenshotAsync()) return;
+        if (!_settings.WatchClipboard) return;
+
         var text = ClipboardHelper.TryGetText();
         if (text == null || text.Length > 200 || !BubbleWindow.IsConvertible(text, automatic: true)) return;
         _bubble.RememberClipboard(text);
         _bubble.ShowConversion(text, explicitRequest: false);
+    }
+
+    private bool _readingScreenshot;
+
+    /// <summary>Returns true when the clipboard held an image (handled here).</summary>
+    private async Task<bool> TryConvertScreenshotAsync()
+    {
+        // Text copied from Word, a web page... may come with a picture: the text wins.
+        if (ClipboardHelper.TryGetText() is { Length: > 0 }) return false;
+        using var image = ScreenshotReader.TryGetClipboardImage();
+        if (image == null) return false;
+        if (_readingScreenshot || ScreenshotReader.IsFullScreen(image)) return true;
+        _readingScreenshot = true;
+        try
+        {
+            var lines = await ScreenshotReader.ReadLinesAsync(image);
+            if (lines == null)
+            {
+                _bubble.ShowMessage(L.Screenshot, L.NoOcr, L.NoOcrHint);
+                return true;
+            }
+            var found = Core.AmountParser.FindInScreenshot(lines);
+            if (found is { } f)
+                _bubble.ShowScreenshotConversion(f.Line);
+            else
+                _bubble.ShowMessage(L.Screenshot, L.NoAmountInScreenshot, L.NoAmountInScreenshotHint);
+        }
+        catch (Exception ex)
+        {
+            Program.Log(ex);
+        }
+        finally
+        {
+            _readingScreenshot = false;
+        }
+        return true;
     }
 
     private void ToggleBubble()

@@ -383,6 +383,25 @@ internal sealed class BubbleWindow : Window
         Expand();
     }
 
+    /// <summary>Shows a short message in the expanded bubble.</summary>
+    public void ShowMessage(string source, string title, string hint)
+    {
+        if (!IsVisible) return;
+        _tvSource.Text = source;
+        _tvResult.Text = title;
+        _tvResult.FontSize = 16;
+        _tvRate.Text = hint;
+        _lastResult = null;
+        Expand();
+    }
+
+    /// <summary>Conversion of an amount read in a screenshot.</summary>
+    public void ShowScreenshotConversion(string line)
+    {
+        ShowConversion(line, explicitRequest: true);
+        if (_expanded) _tvSource.Text = L.Screenshot + " · " + _tvSource.Text;
+    }
+
     private void ShowIdleCard()
     {
         _tvSource.Text = L.AppName;
