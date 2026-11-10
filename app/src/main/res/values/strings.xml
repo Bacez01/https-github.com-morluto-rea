@@ -38,7 +38,7 @@
     <string name="refresh_rate">Update the dollar rate</string>
 
     <string name="section_howto">How to use</string>
-    <string name="howto">• The bubble sits in a corner of the screen. Drag it to move it: it snaps to the nearest corner.\n• On a web page, select an amount (\"49,99 €\", \"$1,299\", \"15 euros\"…): the bubble grows and shows the amount in FCFA.\n• Tap anywhere outside the bubble to close it: it shrinks back into its corner.\n• Long-press the result to copy it.\n• Without automatic detection, select the amount then choose \"Convert to FCFA\" in the selection menu (⋮).</string>
+    <string name="howto">• The bubble sits in a corner of the screen. Drag it to move it: it snaps to the nearest corner.\n• On a web page, select an amount (\"49,99 €\", \"$1,299\", \"15 euros\"…): the bubble grows and shows the amount in FCFA.\n• Tap anywhere outside the bubble to close it: it shrinks back into its corner.\n• Long-press the result to copy it.\n• Without automatic detection: copy the amount then tap the bubble, or choose \"Convert to FCFA\" in the selection menu (⋮).</string>
 
     <string name="notification_channel">Floating bubble</string>
     <string name="notification_text">The bubble is active. Select an amount to convert it.</string>
@@ -48,7 +48,7 @@
     <string name="no_amount_hint">Select a price in € or $</string>
     <string name="unknown_currency">Currency not specified</string>
     <string name="idle_title">Select an amount</string>
-    <string name="idle_hint">in € or $ on any page</string>
+    <string name="idle_hint">or copy it, then tap the bubble</string>
     <string name="copied">Copied: %1$s</string>
 
     <string name="accessibility_description">Detects the amounts in euros or dollars that you select in any app (web browser, etc.) and shows their value in CFA francs in the floating bubble. Only the selected text is read, locally; nothing is stored or sent.</string>

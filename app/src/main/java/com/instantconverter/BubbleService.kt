@@ -26,6 +26,7 @@ import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
+import android.view.ViewTreeObserver
 import android.view.WindowManager
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.OvershootInterpolator
@@ -105,6 +106,7 @@ class BubbleService : Service() {
     private var cornerBottom = true
     private var snapAnimator: ValueAnimator? = null
     private var lastResultText: String? = null
+    private var lastClipboardText: String? = null
 
     private val accent = Color.parseColor("#1B7F5A")
 
@@ -520,11 +522,57 @@ class BubbleService : Service() {
     }
 
     private fun onBubbleTapped() {
-        // Tapping the bubble re-opens the last conversion, or a short help card.
-        if (tvResult.text.isNullOrEmpty()) {
-            showIdleCard()
-        } else {
-            expand()
+        // A freshly copied amount wins; otherwise re-open the last conversion,
+        // or a short help card.
+        readClipboard { clip ->
+            val usable = clip != null && clip != lastClipboardText &&
+                !Regex("""(?i)f?cfa|xof""").containsMatchIn(clip) &&
+                AmountParser.parse(clip, requireCurrency = false) != null
+            when {
+                usable -> {
+                    lastClipboardText = clip
+                    showConversion(clip!!, explicit = true)
+                }
+                tvResult.text.isNullOrEmpty() -> showIdleCard()
+                else -> expand()
+            }
         }
+    }
+
+    /**
+     * Since Android 10 only the focused window may read the clipboard, so the
+     * bubble briefly takes focus, reads it, then gives focus back.
+     */
+    private fun readClipboard(callback: (String?) -> Unit) {
+        val cm = getSystemService(ClipboardManager::class.java)!!
+        val read = {
+            try {
+                cm.primaryClip?.takeIf { it.itemCount > 0 }
+                    ?.getItemAt(0)?.coerceToText(this)?.toString()?.trim()?.take(200)
+            } catch (_: Exception) {
+                null
+            }
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            callback(read())
+            return
+        }
+        var done = false
+        lateinit var listener: ViewTreeObserver.OnWindowFocusChangeListener
+        val finish = {
+            if (!done) {
+                done = true
+                root.viewTreeObserver.removeOnWindowFocusChangeListener(listener)
+                val text = read()
+                params.flags = params.flags or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                safeUpdate()
+                callback(text)
+            }
+        }
+        listener = ViewTreeObserver.OnWindowFocusChangeListener { hasFocus -> if (hasFocus) finish() }
+        root.viewTreeObserver.addOnWindowFocusChangeListener(listener)
+        params.flags = params.flags and WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE.inv()
+        safeUpdate()
+        root.postDelayed({ finish() }, 500)
     }
 }

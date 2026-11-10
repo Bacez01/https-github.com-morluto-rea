@@ -29,8 +29,8 @@ La bulle s'affiche dès l'ouverture de l'application.
       *paramètres restreints* : *Infos sur l'appli › ⋮ › Autoriser les paramètres restreints* ;
    3. (Android 13+) autoriser les notifications.
 
-Sans le service d'accessibilité, sélectionnez le montant puis choisissez
-**Convertir en FCFA** dans le menu de sélection (⋮ dans Chrome).
+Sans le service d'accessibilité : **copiez le montant puis touchez la bulle**, ou
+sélectionnez-le et choisissez **Convertir en FCFA** dans le menu de sélection (⋮ dans Chrome).
 
 ## Développement
 

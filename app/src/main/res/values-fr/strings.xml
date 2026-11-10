@@ -37,7 +37,7 @@
     <string name="refresh_rate">Mettre à jour le taux du dollar</string>
 
     <string name="section_howto">Mode d\'emploi</string>
-    <string name="howto">• La bulle se place dans un coin de l\'écran. Faites-la glisser pour la déplacer : elle se range dans le coin le plus proche.\n• Sur une page web, sélectionnez un montant (« 49,99 € », « 1 299 $ », « 15 euros »…) : la bulle s\'agrandit et affiche le montant en FCFA.\n• Touchez n\'importe où en dehors de la bulle pour la fermer : elle se range dans son coin.\n• Appui long sur le résultat pour le copier.\n• Sans la détection automatique, sélectionnez le montant puis choisissez « Convertir en FCFA » dans le menu de sélection (⋮).</string>
+    <string name="howto">• La bulle se place dans un coin de l\'écran. Faites-la glisser pour la déplacer : elle se range dans le coin le plus proche.\n• Sur une page web, sélectionnez un montant (« 49,99 € », « 1 299 $ », « 15 euros »…) : la bulle s\'agrandit et affiche le montant en FCFA.\n• Touchez n\'importe où en dehors de la bulle pour la fermer : elle se range dans son coin.\n• Appui long sur le résultat pour le copier.\n• Sans la détection automatique : copiez le montant puis touchez la bulle, ou choisissez « Convertir en FCFA » dans le menu de sélection (⋮).</string>
 
     <string name="notification_channel">Bulle flottante</string>
     <string name="notification_text">La bulle est active. Sélectionnez un montant pour le convertir.</string>
@@ -47,7 +47,7 @@
     <string name="no_amount_hint">Sélectionnez un prix en € ou en $</string>
     <string name="unknown_currency">Devise non précisée</string>
     <string name="idle_title">Sélectionnez un montant</string>
-    <string name="idle_hint">en € ou en $ sur n\'importe quelle page</string>
+    <string name="idle_hint">ou copiez-le puis touchez la bulle</string>
     <string name="copied">Copié : %1$s</string>
 
     <string name="accessibility_description">Détecte les montants en euros ou en dollars que vous sélectionnez dans n\'importe quelle appli (navigateur web, etc.) et affiche leur valeur en francs CFA dans la bulle flottante. Seul le texte sélectionné est lu, localement ; rien n\'est enregistré ni envoyé.</string>
