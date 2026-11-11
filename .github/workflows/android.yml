@@ -29,7 +29,10 @@ jobs:
       - name: Build debug APK
         run: ./gradlew --no-daemon assembleDebug
 
+      - name: Name the APK after its version
+        run: cp app/build/outputs/apk/debug/app-debug.apk InstantConverter-v2.apk
+
       - uses: actions/upload-artifact@v4
         with:
-          name: instant-converter-apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: instant-converter-v2-apk
+          path: InstantConverter-v2.apk

@@ -8,9 +8,9 @@ internal static class L
     private static readonly bool Fr = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "fr";
     private static string T(string fr, string en) => Fr ? fr : en;
 
-    public static string AppName => T("Convertisseur Instantané", "Instant Converter");
+    public static string AppName => T("Convertisseur Instantané 2", "Instant Converter 2");
     public static string NoAmount => T("Aucun montant trouvé", "No amount found");
-    public static string NoAmountHint => T("Sélectionnez un prix en € ou en $", "Select a price in € or $");
+    public static string NoAmountHint => T("Sélectionnez un prix en €, $, £ ou ¥", "Select a price in €, $, £ or ¥");
     public static string UnknownCurrency => T("Devise non précisée", "Currency not specified");
     public static string IdleTitle => T("Sélectionnez un montant", "Select an amount");
     public static string IdleHint => T("ou copiez-le puis cliquez sur la bulle", "or copy it, then click the bubble");
@@ -28,15 +28,18 @@ internal static class L
     public static string NoOcr => T("Lecture de texte indisponible", "Text recognition unavailable");
     public static string NoOcrHint => T("Ajoutez la langue Français dans Paramètres › Heure et langue", "Add a language in Settings › Time & language");
     public static string MenuStartup => T("Lancer au démarrage de Windows", "Start with Windows");
-    public static string MenuRefresh => T("Mettre à jour le taux du dollar", "Update the dollar rate");
+    public static string MenuRefresh => T("Mettre à jour les taux", "Update the exchange rates");
+    public static string HistoryShow => T("Historique ▾", "History ▾");
+    public static string HistoryHide => T("Masquer l'historique ▴", "Hide history ▴");
+    public static string MenuClearHistory => T("Effacer l'historique", "Clear history");
     public static string MenuQuit => T("Quitter", "Quit");
     public static string RateDefault => T("taux approximatif", "approximate rate");
     public static string RateFixed => T("parité fixe", "fixed parity");
     public static string RateUpdated(string when) => T("mis à jour le " + when, "updated " + when);
-    public static string RateRefreshFailed => T("Impossible de mettre à jour le taux (pas de connexion ?)", "Could not update the rate (no connection?)");
+    public static string RateRefreshFailed => T("Impossible de mettre à jour les taux (pas de connexion ?)", "Could not update the rates (no connection?)");
 
     public static string WelcomeTitle => T("La bulle est prête", "The bubble is ready");
     public static string WelcomeText => T(
-        "Sélectionnez un prix en € ou en $ sur une page web, ou faites une capture d'écran (Win+Maj+S) : la bulle affiche le montant en FCFA. Clic droit sur la bulle pour les options.",
-        "Select a price in € or $ on a web page, or take a screenshot (Win+Shift+S): the bubble shows it in FCFA. Right-click the bubble for options.");
+        "Sélectionnez un prix en €, $, £ ou ¥ sur une page web, ou faites une capture d'écran (Win+Maj+S) : la bulle affiche le montant en FCFA. Clic droit sur la bulle pour les options.",
+        "Select a price in €, $, £ or ¥ on a web page, or take a screenshot (Win+Shift+S): the bubble shows it in FCFA. Right-click the bubble for options.");
 }

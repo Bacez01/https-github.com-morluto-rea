@@ -11,7 +11,7 @@ internal static class Program
     public static void Main()
     {
         // Only one bubble at a time.
-        using var mutex = new Mutex(true, "InstantConverter.SingleInstance", out bool first);
+        using var mutex = new Mutex(true, "InstantConverter2.SingleInstance", out bool first);
         if (!first) return;
 
         System.Windows.Forms.Application.EnableVisualStyles();

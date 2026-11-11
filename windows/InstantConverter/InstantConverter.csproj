@@ -8,13 +8,13 @@
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <AssemblyName>InstantConverter</AssemblyName>
+    <AssemblyName>InstantConverter2</AssemblyName>
     <RootNamespace>InstantConverter</RootNamespace>
     <StartupObject>InstantConverter.Program</StartupObject>
     <ApplicationIcon>app.ico</ApplicationIcon>
-    <Product>Instant Converter</Product>
-    <AssemblyTitle>Instant Converter</AssemblyTitle>
-    <Version>1.0.0</Version>
+    <Product>Instant Converter 2</Product>
+    <AssemblyTitle>Instant Converter 2</AssemblyTitle>
+    <Version>2.0.0</Version>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\InstantConverter.Core\InstantConverter.Core.csproj" />

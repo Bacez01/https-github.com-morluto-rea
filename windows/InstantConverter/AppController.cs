@@ -16,7 +16,8 @@ internal sealed class AppController : IDisposable
     private readonly WinForms.NotifyIcon _tray;
     private readonly WinForms.ContextMenuStrip _menu;
     private readonly WinForms.ToolStripMenuItem _toggleItem;
-    private readonly WinForms.ToolStripMenuItem _rateItem;
+    private readonly WinForms.ToolStripMenuItem[] _rateItems;
+    private readonly WinForms.ToolStripMenuItem _rateWhen;
     private readonly DispatcherTimer _rateTimer;
     private SelectionWatcher? _watcher;
     private DateTime _suppressClipboardUntil = DateTime.MinValue;
@@ -42,7 +43,15 @@ internal sealed class AppController : IDisposable
         screenshots.CheckedChanged += (_, _) => { _settings.ReadScreenshots = screenshots.Checked; _settings.Save(); };
         var startup = new WinForms.ToolStripMenuItem(L.MenuStartup) { CheckOnClick = true };
         startup.CheckedChanged += (_, _) => StartupManager.Set(startup.Checked);
-        _rateItem = new WinForms.ToolStripMenuItem("") { Enabled = false };
+        _rateItems = new WinForms.ToolStripMenuItem[RateService.Downloaded.Length];
+        for (int i = 0; i < _rateItems.Length; i++) _rateItems[i] = new WinForms.ToolStripMenuItem("") { Enabled = false };
+        _rateWhen = new WinForms.ToolStripMenuItem("") { Enabled = false };
+        var clearHistory = new WinForms.ToolStripMenuItem(L.MenuClearHistory, null, (_, _) =>
+        {
+            _settings.History.Clear();
+            _settings.Save();
+            _bubble.Collapse();
+        });
         var refresh = new WinForms.ToolStripMenuItem(L.MenuRefresh, null, async (_, _) =>
         {
             bool ok = await _rates.RefreshAsync(force: true);
@@ -54,7 +63,8 @@ internal sealed class AppController : IDisposable
         {
             _toggleItem, new WinForms.ToolStripSeparator(),
             autoCopy, watchClip, screenshots, startup, new WinForms.ToolStripSeparator(),
-            _rateItem, refresh, new WinForms.ToolStripSeparator(), quit,
+            _rateItems[0], _rateItems[1], _rateItems[2], _rateWhen, refresh, new WinForms.ToolStripSeparator(),
+            clearHistory, quit,
         });
         _menu.Opening += (_, _) =>
         {
@@ -189,10 +199,10 @@ internal sealed class AppController : IDisposable
     private void UpdateRateItem()
     {
         var conv = _rates.Converter();
-        string when = _settings.RateUpdatedUtc is { } t
+        for (int i = 0; i < _rateItems.Length; i++) _rateItems[i].Text = conv.FormatRate(RateService.Downloaded[i]);
+        _rateWhen.Text = "(" + (_settings.RateUpdatedUtc is { } t
             ? L.RateUpdated(t.ToLocalTime().ToString("g"))
-            : L.RateDefault;
-        _rateItem.Text = conv.FormatRate(Core.Currency.USD) + " (" + when + ")";
+            : L.RateDefault) + ")";
     }
 
     public void Dispose()

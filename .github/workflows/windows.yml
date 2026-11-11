@@ -31,5 +31,5 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: instant-converter-windows
-          path: out/InstantConverter.exe
+          name: instant-converter-windows-v2
+          path: out/InstantConverter2.exe

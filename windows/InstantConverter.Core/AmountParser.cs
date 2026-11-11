@@ -5,15 +5,16 @@ using System.Text.RegularExpressions;
 
 namespace InstantConverter.Core;
 
-public enum Currency { EUR, USD }
+public enum Currency { EUR, USD, GBP, CNY }
 
 /// <summary>An amount found in text. <see cref="Currency"/> is null for a plain number.</summary>
 public sealed record ParsedAmount(double Value, Currency? Currency);
 
 /// <summary>
-/// Extracts a monetary amount (euros or dollars) from arbitrary selected text:
+/// Extracts a monetary amount (euros, dollars, pounds sterling or Chinese yuan)
+/// from arbitrary selected text:
 /// "49,99 €", "€49.99", "1 299,00 EUR", "$1,299.99", "USD 15", "12€50",
-/// "1.234,56 €", "2,5 M€", "$3k", "15 euros", "20 dollars"...
+/// "1.234,56 €", "2,5 M€", "$3k", "15 euros", "20 dollars", "£49.99", "¥199", "199 元"...
 /// Same rules as the Android app.
 /// </summary>
 public static class AmountParser
@@ -32,18 +33,27 @@ public static class AmountParser
     private const string EurSym = @"€|EUR(?!\p{L})|euros?(?!\p{L})";
     private const string UsdSym = @"US\$|USD(?!\p{L})|\$|US" + Sp + @"dollars?(?!\p{L})|dollars?(?!\p{L})";
 
+    private const string GbpSym =
+        @"£|GBP(?!\p{L})|livres?" + Sp + @"sterling(?!\p{L})|pounds?" + Sp + @"sterling(?!\p{L})";
+
+    // "¥" is also the yen sign; Chinese shops use it for the yuan, which is
+    // the currency handled here (the yen is not).
+    private const string CnySym = @"CN¥|CNY(?!\p{L})|RMB(?!\p{L})|¥|￥|元|yuans?(?!\p{L})|renminbi(?!\p{L})";
+
+    private const string AnySym = UsdSym + "|" + EurSym + "|" + GbpSym + "|" + CnySym;
+
     // "12€50" (French way of writing 12.50 €)
     private static readonly Regex InlineEuro = new(
         @"(?<![0-9.,])(?<int>[0-9]+)" + Sp + "€" + Sp + @"(?<dec>[0-9]{2})(?![0-9])");
 
     // Currency before the number: "€ 49,99", "USD 1,299.99", "$3k"
     private static readonly Regex Prefix = new(
-        "(?<cur>" + UsdSym + "|" + EurSym + ")" + Sp + "(?<num>" + Num + ")" + Mult,
+        "(?<cur>" + AnySym + ")" + Sp + "(?<num>" + Num + ")" + Mult,
         RegexOptions.IgnoreCase);
 
     // Currency after the number: "49,99 €", "1 299 EUR", "2,5 M€", "3 milliards d'euros"
     private static readonly Regex Suffix = new(
-        @"(?<![0-9.,])(?<num>" + Num + ")" + Mult + Sp + @"(?:d['’]" + Sp + @"|de\s)?(?<cur>" + EurSym + "|" + UsdSym + ")",
+        @"(?<![0-9.,])(?<num>" + Num + ")" + Mult + Sp + @"(?:d['’]" + Sp + @"|de\s)?(?<cur>" + AnySym + ")",
         RegexOptions.IgnoreCase);
 
     private static readonly Regex Bare = new(@"(?<![0-9.,])(?<num>" + Num + ")" + Mult);
@@ -152,6 +162,9 @@ public static class AmountParser
     {
         var s = symbol.ToLowerInvariant();
         if (s == "€" || s == "eur" || s.StartsWith("euro", StringComparison.Ordinal)) return Currency.EUR;
+        if (s == "£" || s == "gbp" || s.Contains("sterling", StringComparison.Ordinal)) return Currency.GBP;
+        if (s.Contains('¥') || s == "￥" || s == "元" || s == "cny" || s == "rmb" ||
+            s.StartsWith("yuan", StringComparison.Ordinal) || s == "renminbi") return Currency.CNY;
         if (s.Contains('$') || s == "usd" || s.Contains("dollar", StringComparison.Ordinal)) return Currency.USD;
         return null;
     }

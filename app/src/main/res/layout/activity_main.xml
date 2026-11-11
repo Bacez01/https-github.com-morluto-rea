@@ -173,6 +173,27 @@
                 android:text="@string/refresh_rate" />
         </LinearLayout>
 
+        <!-- History -->
+        <TextView
+            style="@style/SectionTitle"
+            android:text="@string/section_history" />
+
+        <LinearLayout style="@style/Card">
+
+            <TextView
+                android:id="@+id/history_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="4dp"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/clear_history"
+                style="@style/ActionButton"
+                android:text="@string/clear_history" />
+        </LinearLayout>
+
         <!-- How to -->
         <TextView
             style="@style/SectionTitle"

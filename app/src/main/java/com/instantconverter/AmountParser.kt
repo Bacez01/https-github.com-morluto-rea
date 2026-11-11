@@ -1,19 +1,21 @@
 package com.instantconverter
 
-enum class Currency { EUR, USD }
+enum class Currency { EUR, USD, GBP, CNY }
 
 /**
  * An amount found in a piece of text. [currency] is null when the text holds a
- * number without any euro/dollar marker.
+ * number without any currency marker.
  */
 data class ParsedAmount(val value: Double, val currency: Currency?)
 
 /**
- * Extracts a monetary amount (euros or dollars) from arbitrary selected text.
+ * Extracts a monetary amount (euros, dollars, pounds sterling or Chinese
+ * yuan) from arbitrary selected text.
  *
  * Handles the usual French / English / German notations:
  * "49,99 €", "€49.99", "1 299,00 EUR", "$1,299.99", "USD 15", "12€50",
- * "1.234,56 €", "2,5 M€", "3k$", "15 euros", "20 dollars"...
+ * "1.234,56 €", "2,5 M€", "3k$", "15 euros", "20 dollars", "£49.99",
+ * "10 livres sterling", "¥199", "199 元", "RMB 1,299", "50 yuans"...
  */
 object AmountParser {
 
@@ -32,18 +34,28 @@ object AmountParser {
     private const val USD_SYM =
         """US\$|USD(?![\p{L}])|\$|US${SP}dollars?(?![\p{L}])|dollars?(?![\p{L}])"""
 
+    private const val GBP_SYM =
+        """£|GBP(?![\p{L}])|livres?${SP}sterling(?![\p{L}])|pounds?${SP}sterling(?![\p{L}])"""
+
+    // "¥" is also the yen sign; Chinese shops use it for the yuan, which is
+    // the currency handled here (the yen is not).
+    private const val CNY_SYM =
+        """CN¥|CNY(?![\p{L}])|RMB(?![\p{L}])|¥|￥|元|yuans?(?![\p{L}])|renminbi(?![\p{L}])"""
+
+    private const val ANY_SYM = "$USD_SYM|$EUR_SYM|$GBP_SYM|$CNY_SYM"
+
     // "12€50" (French way of writing 12.50 €)
     private val INLINE_EURO = Regex("""(?<![\d.,])(?<int>\d+)$SP€$SP(?<dec>\d{2})(?!\d)""")
 
     // Currency before the number: "€ 49,99", "USD 1,299.99", "$3k"
     private val PREFIX = Regex(
-        """(?<cur>$USD_SYM|$EUR_SYM)$SP(?<num>$NUM)$MULT""",
+        """(?<cur>$ANY_SYM)$SP(?<num>$NUM)$MULT""",
         RegexOption.IGNORE_CASE
     )
 
     // Currency after the number: "49,99 €", "1 299 EUR", "2,5 M€", "20 dollars"
     private val SUFFIX = Regex(
-        """(?<![\d.,])(?<num>$NUM)$MULT$SP(?:d['’]$SP|de\s)?(?<cur>$EUR_SYM|$USD_SYM)""",
+        """(?<![\d.,])(?<num>$NUM)$MULT$SP(?:d['’]$SP|de\s)?(?<cur>$ANY_SYM)""",
         RegexOption.IGNORE_CASE
     )
 
@@ -88,6 +100,9 @@ object AmountParser {
         val s = symbol.lowercase()
         return when {
             s == "€" || s == "eur" || s.startsWith("euro") -> Currency.EUR
+            s == "£" || s == "gbp" || s.contains("sterling") -> Currency.GBP
+            s.contains("¥") || s == "￥" || s == "元" || s == "cny" || s == "rmb" ||
+                s.startsWith("yuan") || s == "renminbi" -> Currency.CNY
             s.contains("$") || s == "usd" || s.contains("dollar") -> Currency.USD
             else -> null
         }

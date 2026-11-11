@@ -46,6 +46,8 @@ class MainActivity : Activity() {
     private lateinit var notifButton: Button
     private lateinit var toggleBubble: Button
     private lateinit var rateText: TextView
+    private lateinit var historyText: TextView
+    private lateinit var clearHistory: Button
 
     private fun <T : View> view(id: Int): T = findViewById<T>(id)!!
 
@@ -62,6 +64,12 @@ class MainActivity : Activity() {
         notifButton = view(R.id.notif_button)
         toggleBubble = view(R.id.toggle_bubble)
         rateText = view(R.id.rate_text)
+        historyText = view(R.id.history_text)
+        clearHistory = view(R.id.clear_history)
+        clearHistory.setOnClickListener {
+            HistoryStore.clear(this)
+            refreshUi()
+        }
 
         overlayButton.setOnClickListener {
             startActivity(
@@ -159,7 +167,13 @@ class MainActivity : Activity() {
             DateUtils.getRelativeTimeSpanString(updated, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS)
         )
         rateText.text = "${conv.formatRate(Currency.EUR)} (${getString(R.string.rate_fixed)})\n" +
-            "${conv.formatRate(Currency.USD)} ($updatedText)"
+            listOf(Currency.USD, Currency.GBP, Currency.CNY).joinToString("\n") { conv.formatRate(it) } +
+            "\n($updatedText)"
+
+        val history = HistoryStore.list(this)
+        historyText.text = if (history.isEmpty()) getString(R.string.history_empty)
+        else history.joinToString("\n") { it.format() }
+        clearHistory.visibility = if (history.isEmpty()) View.GONE else View.VISIBLE
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

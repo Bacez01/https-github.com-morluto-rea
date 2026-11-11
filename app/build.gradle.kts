@@ -8,11 +8,12 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.instantconverter"
+        // Version 2 has its own id so it installs next to version 1 instead of replacing it.
+        applicationId = "com.instantconverter.v2"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "2.0"
     }
 
     buildTypes {

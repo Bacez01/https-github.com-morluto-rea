@@ -7,7 +7,7 @@ namespace InstantConverter;
 internal static class StartupManager
 {
     private const string RunKey = @"Software\Microsoft\Windows\CurrentVersion\Run";
-    private const string ValueName = "InstantConverter";
+    private const string ValueName = "InstantConverter2";
 
     public static bool IsEnabled
     {

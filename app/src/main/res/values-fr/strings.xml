@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Convertisseur Instantané</string>
-    <string name="tagline">Sélectionnez un prix en euros ou en dollars sur n\'importe quelle page web : la bulle l\'affiche aussitôt en francs CFA.</string>
-    <string name="process_text_label">Convertir en FCFA</string>
+    <string name="app_name">Convertisseur Instantané 2</string>
+    <string name="tagline">Sélectionnez un prix en euros, dollars, livres sterling ou yuans sur n\'importe quelle page web : la bulle l\'affiche aussitôt en francs CFA.</string>
+    <string name="process_text_label">Convertir en FCFA (v2)</string>
 
     <string name="section_setup">Configuration</string>
     <string name="perm_overlay">1. Affichage par-dessus les autres applis</string>
@@ -26,7 +26,7 @@
     <string name="start_at_boot">Afficher la bulle au démarrage du téléphone</string>
 
     <string name="section_try">Essayer</string>
-    <string name="try_hint">Montant, ex. 49,99 € ou 120 $</string>
+    <string name="try_hint">Montant, ex. 49,99 €, 120 $, 15 £ ou 199 ¥</string>
     <string name="try_sample">49,99 €</string>
     <string name="try_button">Convertir dans la bulle</string>
     <string name="need_overlay">Autorisez d\'abord « Affichage par-dessus les autres applis ».</string>
@@ -36,21 +36,26 @@
     <string name="rate_default">taux approximatif, pas encore mis à jour</string>
     <string name="rate_updated">mis à jour %1$s</string>
     <string name="rate_updating">Mise à jour…</string>
-    <string name="refresh_rate">Mettre à jour le taux du dollar</string>
+    <string name="refresh_rate">Mettre à jour les taux</string>
 
     <string name="section_howto">Mode d\'emploi</string>
-    <string name="howto">• La bulle se place dans un coin de l\'écran. Faites-la glisser pour la déplacer : elle se range dans le coin le plus proche.\n• Sur une page web, sélectionnez un montant (« 49,99 € », « 1 299 $ », « 15 euros »…) : la bulle s\'agrandit et affiche le montant en FCFA.\n• Touchez n\'importe où en dehors de la bulle pour la fermer : elle se range dans son coin.\n• Appui long sur le résultat pour le copier.\n• Sans la détection automatique : copiez le montant puis touchez la bulle, ou choisissez « Convertir en FCFA » dans le menu de sélection (⋮).</string>
+    <string name="howto">• La bulle se place dans un coin de l\'écran. Faites-la glisser pour la déplacer : elle se range dans le coin le plus proche.\n• Sur une page web, sélectionnez un montant (« 49,99 € », « 1 299 $ », « 15 £ », « 199 ¥ », « 199 元 »…) : la bulle s\'agrandit et affiche le montant en FCFA.\n• Touchez n\'importe où en dehors de la bulle pour la fermer : elle se range dans son coin.\n• Appui long sur le résultat pour le copier. Touchez « Historique » pour revoir les 10 dernières conversions.\n• Sans la détection automatique : copiez le montant puis touchez la bulle, ou choisissez « Convertir en FCFA » dans le menu de sélection (⋮).</string>
 
     <string name="notification_channel">Bulle flottante</string>
     <string name="notification_text">La bulle est active. Sélectionnez un montant pour le convertir.</string>
     <string name="notification_stop">Arrêter</string>
 
     <string name="no_amount">Aucun montant trouvé</string>
-    <string name="no_amount_hint">Sélectionnez un prix en € ou en $</string>
+    <string name="no_amount_hint">Sélectionnez un prix en €, $, £ ou ¥</string>
     <string name="unknown_currency">Devise non précisée</string>
     <string name="idle_title">Sélectionnez un montant</string>
     <string name="idle_hint">ou copiez-le puis touchez la bulle</string>
+    <string name="history_show">Historique ▾</string>
+    <string name="history_hide">Masquer l\'historique ▴</string>
+    <string name="section_history">Historique</string>
+    <string name="history_empty">Aucune conversion pour l\'instant.</string>
+    <string name="clear_history">Effacer l\'historique</string>
     <string name="copied">Copié : %1$s</string>
 
-    <string name="accessibility_description">Détecte les montants en euros ou en dollars que vous sélectionnez dans n\'importe quelle appli (navigateur web, etc.) et affiche leur valeur en francs CFA dans la bulle flottante. Dans les navigateurs, elle appuie sur « Copier » de la barre de sélection pour lire le texte choisi (désactivable dans l\'appli). Le texte est lu localement ; rien n\'est enregistré ni envoyé.</string>
+    <string name="accessibility_description">Détecte les montants en euros, dollars, livres sterling ou yuans que vous sélectionnez dans n\'importe quelle appli (navigateur web, etc.) et affiche leur valeur en francs CFA dans la bulle flottante. Dans les navigateurs, elle appuie sur « Copier » de la barre de sélection pour lire le texte choisi (désactivable dans l\'appli). Le texte est lu localement ; rien n\'est enregistré ni envoyé.</string>
 </resources>

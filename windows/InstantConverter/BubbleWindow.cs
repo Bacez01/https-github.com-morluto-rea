@@ -33,6 +33,9 @@ internal sealed class BubbleWindow : Window
     private readonly TextBlock _tvSource;
     private readonly TextBlock _tvResult;
     private readonly TextBlock _tvRate;
+    private readonly TextBlock _historyToggle;
+    private readonly TextBlock _historyList;
+    private bool _historyOpen;
     private readonly ScaleTransform _cardScale = new(1, 1);
 
     private bool _expanded;
@@ -109,6 +112,23 @@ internal sealed class BubbleWindow : Window
         stack.Children.Add(_tvSource);
         stack.Children.Add(_tvResult);
         stack.Children.Add(_tvRate);
+        _historyToggle = new TextBlock
+        {
+            Foreground = Brushes.White,
+            FontSize = 12,
+            Margin = new Thickness(0, 8, 0, 2),
+            TextDecorations = TextDecorations.Underline,
+            Visibility = Visibility.Collapsed,
+        };
+        _historyList = new TextBlock
+        {
+            Foreground = new SolidColorBrush(Color.FromRgb(0xD8, 0xF3, 0xE8)),
+            FontSize = 12,
+            LineHeight = 18,
+            Visibility = Visibility.Collapsed,
+        };
+        stack.Children.Add(_historyToggle);
+        stack.Children.Add(_historyList);
 
         _card = new Border
         {
@@ -276,7 +296,12 @@ internal sealed class BubbleWindow : Window
         }
         else if (_expanded)
         {
-            if (_lastResult != null)
+            if (IsOver(_historyToggle, e))
+            {
+                _historyOpen = !_historyOpen;
+                RefreshHistory();
+            }
+            else if (_lastResult != null)
             {
                 CopyResult?.Invoke(_lastResult);
                 FlashCopied();
@@ -367,6 +392,7 @@ internal sealed class BubbleWindow : Window
                 _tvResult.FontSize = 22;
                 _tvRate.Text = conv.FormatRate(cur);
                 _lastResult = xof;
+                AddToHistory(conv.FormatSource(parsed.Value, cur), xof);
             }
             else
             {
@@ -420,8 +446,45 @@ internal sealed class BubbleWindow : Window
 
     // ------------------------------------------------------------------ expand / collapse
 
+    // ------------------------------------------------------------------ history
+
+    private static bool IsOver(FrameworkElement element, MouseEventArgs e)
+    {
+        if (element.Visibility != Visibility.Visible) return false;
+        var p = e.GetPosition(element);
+        return p.X >= 0 && p.X <= element.ActualWidth && p.Y >= -4 && p.Y <= element.ActualHeight + 4;
+    }
+
+    /// <summary>Keeps the last 10 conversions (the same price twice in a row counts once).</summary>
+    private void AddToHistory(string source, string result)
+    {
+        var h = _settings.History;
+        if (h.Count > 0 && h[0].Source == source && h[0].Result == result) h.RemoveAt(0);
+        h.Insert(0, new HistoryEntry { Time = DateTime.UtcNow, Source = source, Result = result });
+        while (h.Count > 10) h.RemoveAt(h.Count - 1);
+        _settings.Save();
+    }
+
+    /// <summary>Shows the "History" link (and the list when open) under the result.</summary>
+    private void RefreshHistory()
+    {
+        var h = _settings.History;
+        if (h.Count == 0)
+        {
+            _historyOpen = false;
+            _historyToggle.Visibility = Visibility.Collapsed;
+            _historyList.Visibility = Visibility.Collapsed;
+            return;
+        }
+        _historyToggle.Visibility = Visibility.Visible;
+        _historyToggle.Text = _historyOpen ? L.HistoryHide : L.HistoryShow;
+        _historyList.Text = string.Join("\n", h);
+        _historyList.Visibility = _historyOpen ? Visibility.Visible : Visibility.Collapsed;
+    }
+
     private void Expand()
     {
+        RefreshHistory();
         _bubble.Visibility = Visibility.Collapsed;
         _card.Visibility = Visibility.Visible;
         _expanded = true;
@@ -440,6 +503,7 @@ internal sealed class BubbleWindow : Window
     {
         if (!_expanded) return;
         _expanded = false;
+        _historyOpen = false;
         var shrink = new DoubleAnimation(1, 0.6, TimeSpan.FromMilliseconds(120));
         var fade = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(120));
         fade.Completed += (_, _) =>

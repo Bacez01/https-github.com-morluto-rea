@@ -1,9 +1,21 @@
 # Instant Converter — Convertisseur Instantané
 
 Application Android qui affiche une **bulle flottante** dans un coin de l'écran.
-Sélectionnez un montant en **euros** ou en **dollars** sur une page web : la bulle
+Sélectionnez un montant en **euros**, **dollars**, **livres sterling** ou **yuans chinois**
+sur une page web : la bulle
 s'agrandit légèrement et affiche le montant converti en **francs CFA (FCFA / XOF)**.
 Touchez n'importe où en dehors de la bulle : elle se referme et se range dans son coin.
+
+## Version 2
+
+- Nouvelles monnaies : **livre sterling** (`£`, `GBP`, « livres sterling ») et **yuan chinois**
+  (`¥`, `￥`, `元`, `CNY`, `RMB`, « yuans »). Le signe `¥` est traité comme le yuan.
+- **Historique** des 10 dernières conversions : lien « Historique » dans la bulle (et
+  section dans l'appli Android, menu « Effacer l'historique » sur PC).
+- La version 2 s'installe **à côté** de la version 1 sans la remplacer :
+  Android `com.instantconverter.v2` (« Convertisseur Instantané 2 »),
+  Windows `InstantConverter2.exe` (réglages dans `%APPDATA%\InstantConverter2`).
+- Fichiers à télécharger dans **Actions** : `instant-converter-v2-apk` et `instant-converter-windows-v2`.
 
 ## Fonctionnement
 
@@ -13,7 +25,7 @@ Touchez n'importe où en dehors de la bulle : elle se referme et se range dans s
 | `SelectionAccessibilityService` | Détecte le texte sélectionné. Dans les champs de saisie, Android transmet la sélection directement. Sur les pages web, les navigateurs ne la transmettent pas : dès que la barre « Copier / Partager » apparaît, le service appuie sur « Copier » et la bulle convertit le texte copié (option « Résultat immédiat », désactivable). |
 | `ProcessTextActivity` | Ajoute « Convertir en FCFA » dans le menu de sélection de texte de toutes les applis (solution de secours sans accessibilité). |
 | `AmountParser` | Reconnaît `49,99 €`, `€49.99`, `1 299,00 EUR`, `$1,299.99`, `USD 15`, `12€50`, `1.234,56 €`, `2,5 M€`, `$3k`, `15 euros`, `20 dollars`… |
-| `RateRepository` | EUR → XOF : parité fixe **655,957**. USD → XOF : téléchargé depuis `open.er-api.com` (gratuit, sans clé), mis en cache, actualisé toutes les 6 h. |
+| `RateRepository` | EUR → XOF : parité fixe **655,957**. USD, GBP et CNY → XOF : téléchargés depuis `open.er-api.com` (gratuit, sans clé), mis en cache, actualisé toutes les 6 h. |
 | `BootReceiver` | Réaffiche la bulle au démarrage du téléphone (désactivable). |
 
 La bulle s'affiche dès l'ouverture de l'application.

@@ -28,6 +28,20 @@ public class AmountParserTests
     [InlineData("only 5 US dollars", 5.0, Currency.USD)]
     [InlineData("$3k", 3000.0, Currency.USD)]
     [InlineData("$1.5 billion", 1.5e9, Currency.USD)]
+    [InlineData("£49.99", 49.99, Currency.GBP)]
+    [InlineData("£ 1,299", 1299.0, Currency.GBP)]
+    [InlineData("49,99 £", 49.99, Currency.GBP)]
+    [InlineData("GBP 20", 20.0, Currency.GBP)]
+    [InlineData("10 livres sterling", 10.0, Currency.GBP)]
+    [InlineData("5 pounds sterling", 5.0, Currency.GBP)]
+    [InlineData("¥199", 199.0, Currency.CNY)]
+    [InlineData("￥ 1,299.00", 1299.0, Currency.CNY)]
+    [InlineData("199 元", 199.0, Currency.CNY)]
+    [InlineData("199元", 199.0, Currency.CNY)]
+    [InlineData("RMB 88", 88.0, Currency.CNY)]
+    [InlineData("CNY 15.5", 15.5, Currency.CNY)]
+    [InlineData("CN¥30", 30.0, Currency.CNY)]
+    [InlineData("50 yuans", 50.0, Currency.CNY)]
     [InlineData("de 10 € à 20 €", 10.0, Currency.EUR)]
     [InlineData("en 2024 : 150 €", 150.0, Currency.EUR)]
     [InlineData("3 articles à 15 €", 15.0, Currency.EUR)]
@@ -85,7 +99,15 @@ public class AmountParserTests
     [Fact]
     public void Conversion()
     {
-        var c = new CurrencyConverter(600.0, new CultureInfo("fr-FR"));
+        var rates = new System.Collections.Generic.Dictionary<Currency, double>
+        {
+            [Currency.USD] = 600.0, [Currency.GBP] = 750.0, [Currency.CNY] = 80.0,
+        };
+        var c = new CurrencyConverter(rates, new CultureInfo("fr-FR"));
+        Assert.Equal(7500.0, c.ToXof(10, Currency.GBP), 9);
+        Assert.Equal(800.0, c.ToXof(10, Currency.CNY), 9);
+        Assert.Equal("15 £", c.FormatSource(15, Currency.GBP));
+        Assert.Equal("1 ¥ (yuan) = 80 FCFA", c.FormatRate(Currency.CNY));
         Assert.Equal(655.957, c.ToXof(1, Currency.EUR), 9);
         Assert.Equal(6000.0, c.ToXof(10, Currency.USD), 9);
         Assert.Equal("32 791 FCFA", Spaces(c.FormatXof(c.ToXof(49.99, Currency.EUR))));

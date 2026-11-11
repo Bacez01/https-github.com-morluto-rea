@@ -99,6 +99,9 @@ class BubbleService : Service() {
     private lateinit var tvSource: TextView
     private lateinit var tvResult: TextView
     private lateinit var tvRate: TextView
+    private lateinit var tvHistoryToggle: TextView
+    private lateinit var tvHistory: TextView
+    private var historyOpen = false
 
     private var attached = false
     private var expanded = false
@@ -251,9 +254,23 @@ class BubbleService : Service() {
             setTextColor(Color.parseColor("#B5E3CF"))
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 11f)
         }
+        tvHistoryToggle = TextView(this).apply {
+            setTextColor(Color.WHITE)
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+            setPadding(0, dp(8f), 0, dp(2f))
+            paintFlags = paintFlags or android.graphics.Paint.UNDERLINE_TEXT_FLAG
+        }
+        tvHistory = TextView(this).apply {
+            setTextColor(Color.parseColor("#D8F3E8"))
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+            setLineSpacing(dp(2f).toFloat(), 1f)
+            visibility = View.GONE
+        }
         card.addView(tvSource)
         card.addView(tvResult)
         card.addView(tvRate)
+        card.addView(tvHistoryToggle)
+        card.addView(tvHistory)
         root.addView(card, FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT
         ).apply { setMargins(dp(6f), dp(6f), dp(6f), dp(6f)) })
@@ -374,6 +391,7 @@ class BubbleService : Service() {
                 tvResult.text = xof
                 tvRate.text = conv.formatRate(parsed.currency)
                 lastResultText = xof
+                HistoryStore.add(this, conv.formatSource(parsed.value, parsed.currency), xof)
             } else {
                 val eur = conv.formatXof(conv.toXof(parsed.value, Currency.EUR))
                 val usd = conv.formatXof(conv.toXof(parsed.value, Currency.USD))
@@ -405,6 +423,7 @@ class BubbleService : Service() {
     }
 
     private fun expand() {
+        refreshHistory()
         bubble.visibility = View.GONE
         card.visibility = View.VISIBLE
         expanded = true
@@ -426,6 +445,7 @@ class BubbleService : Service() {
     private fun collapse() {
         if (!expanded) return
         expanded = false
+        historyOpen = false
         card.animate().cancel()
         card.animate().scaleX(0.6f).scaleY(0.6f).alpha(0f).setDuration(140)
             .withEndAction {
@@ -498,7 +518,9 @@ class BubbleService : Service() {
                         saveCorner()
                         moveToCorner(animate = true)
                     } else if (expanded) {
-                        if (e.eventTime - downTime >= longPressTimeout) {
+                        if (isOver(tvHistoryToggle, e)) {
+                            toggleHistory()
+                        } else if (e.eventTime - downTime >= longPressTimeout) {
                             lastResultText?.let { copyToClipboard(it) }
                         } else {
                             collapse()
@@ -524,6 +546,37 @@ class BubbleService : Service() {
     private fun isConvertible(clip: String?): Boolean =
         clip != null && !Regex("""(?i)f?cfa|xof""").containsMatchIn(clip) &&
             AmountParser.parse(clip, requireCurrency = false) != null
+
+    // ---------------------------------------------------------------- history
+
+    private fun isOver(view: View, e: MotionEvent): Boolean {
+        if (view.visibility != View.VISIBLE) return false
+        val loc = IntArray(2)
+        view.getLocationOnScreen(loc)
+        return e.rawX >= loc[0] && e.rawX <= loc[0] + view.width &&
+            e.rawY >= loc[1] - dp(6f) && e.rawY <= loc[1] + view.height + dp(6f)
+    }
+
+    /** Shows the "History" link (and the list when open) under the result. */
+    private fun refreshHistory() {
+        val items = HistoryStore.list(this)
+        if (items.isEmpty()) {
+            historyOpen = false
+            tvHistoryToggle.visibility = View.GONE
+            tvHistory.visibility = View.GONE
+            return
+        }
+        tvHistoryToggle.visibility = View.VISIBLE
+        tvHistoryToggle.text = getString(if (historyOpen) R.string.history_hide else R.string.history_show)
+        tvHistory.text = items.joinToString("\n") { it.format() }
+        tvHistory.visibility = if (historyOpen) View.VISIBLE else View.GONE
+    }
+
+    private fun toggleHistory() {
+        historyOpen = !historyOpen
+        refreshHistory()
+        root.post { moveToCorner(animate = false) }
+    }
 
     private fun onBubbleTapped() {
         // A freshly copied amount wins; otherwise re-open the last conversion,
