@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="header">#FF15223F</color>
+    <color name="header_text">#FFFFFFFF</color>
+    <color name="header_text_dim">#B3FFFFFF</color>
+    <color name="accent">#FFFF6B3D</color>
+    <color name="page">#FFF4F5F9</color>
+    <color name="card">#FFFFFFFF</color>
+    <color name="text_primary">#FF1A1C22</color>
+    <color name="text_secondary">#FF6A6F7A</color>
+    <color name="divider">#FFE3E5EC</color>
+    <color name="chip">#26FFFFFF</color>
+    <color name="playing_row">#1AFF6B3D</color>
+    <color name="logo_background">#FFE9EBF2</color>
+    <color name="launcher_background">#FF15223F</color>
+</resources>

@@ -92,3 +92,12 @@ ordinateur » au premier lancement → **Informations complémentaires** → **E
 - C# / WPF, .NET 8. Moteur de conversion partagé et testé : `windows/InstantConverter.Core`.
 - Tests : `dotnet test windows/InstantConverter.Core.Tests`.
 - Programme : `dotnet publish windows/InstantConverter -c Release -r win-x64 --self-contained -p:PublishSingleFile=true`.
+
+---
+
+# Radio Monde
+
+Le dossier `radio/` contient une autre application Android, **Radio Monde** : radio en direct
+du monde entier (radios françaises à l'accueil), favoris, recherche, genres, écoute en arrière-plan
+et minuteur. Voir [`radio/README.md`](radio/README.md). L'APK se télécharge dans **Actions** →
+« Build Radio Monde » → artefact `radio-monde-apk`.

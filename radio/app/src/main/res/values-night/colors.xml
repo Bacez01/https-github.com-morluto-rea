@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="header">#FF0F1730</color>
+    <color name="page">#FF101217</color>
+    <color name="card">#FF1A1D24</color>
+    <color name="text_primary">#FFECEDF0</color>
+    <color name="text_secondary">#FF9EA3AD</color>
+    <color name="divider">#FF2A2E37</color>
+    <color name="playing_row">#26FF6B3D</color>
+    <color name="logo_background">#FF2A2E37</color>
+</resources>

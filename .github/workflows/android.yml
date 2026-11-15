@@ -5,9 +5,12 @@ on:
     paths-ignore:
       - "windows/**"
       - ".github/workflows/windows.yml"
+      - "radio/**"
+      - ".github/workflows/radio.yml"
   pull_request:
     paths-ignore:
       - "windows/**"
+      - "radio/**"
   workflow_dispatch:
 
 jobs:
