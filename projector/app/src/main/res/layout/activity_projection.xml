@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+
+    <!-- Everything inside the stage is mirrored for the lens; the controls are not. -->
+    <FrameLayout
+        android:id="@+id/stage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            android:visibility="gone" />
+
+        <TextureView
+            android:id="@+id/video"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/controls_background"
+        android:orientation="vertical"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/keystone_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="120dp"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+            <SeekBar
+                android:id="@+id/keystone"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/play_pause"
+                    style="@style/ControlButton"
+                    android:text="@string/pause" />
+
+                <Button
+                    android:id="@+id/flip_v"
+                    style="@style/ControlButton"
+                    android:text="@string/control_flip_v" />
+
+                <Button
+                    android:id="@+id/flip_h"
+                    style="@style/ControlButton"
+                    android:text="@string/control_flip_h" />
+
+                <Button
+                    android:id="@+id/zoom_out"
+                    style="@style/ControlButton"
+                    android:contentDescription="@string/zoom_out"
+                    android:text="−" />
+
+                <Button
+                    android:id="@+id/zoom_in"
+                    style="@style/ControlButton"
+                    android:contentDescription="@string/zoom_in"
+                    android:text="+" />
+
+                <Button
+                    android:id="@+id/pattern"
+                    style="@style/ControlButton"
+                    android:text="@string/control_pattern" />
+
+                <Button
+                    android:id="@+id/reset"
+                    style="@style/ControlButton"
+                    android:text="@string/control_reset" />
+
+                <Button
+                    android:id="@+id/close"
+                    style="@style/ControlButton"
+                    android:text="@string/control_close" />
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
+</FrameLayout>

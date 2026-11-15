@@ -1,5 +1,8 @@
 # Instant Converter — Convertisseur Instantané
 
+> Ce dépôt contient aussi **Mini Projecteur**, une appli Android pour projeter photos et
+> vidéos sur un mur avec une boîte et une loupe : voir [`projector/`](projector/README.md).
+
 Application Android qui affiche une **bulle flottante** dans un coin de l'écran.
 Sélectionnez un montant en **euros**, **dollars**, **livres sterling** ou **yuans chinois**
 sur une page web : la bulle

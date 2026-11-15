@@ -5,9 +5,12 @@ on:
     paths-ignore:
       - "windows/**"
       - ".github/workflows/windows.yml"
+      - "projector/**"
+      - ".github/workflows/projector.yml"
   pull_request:
     paths-ignore:
       - "windows/**"
+      - "projector/**"
   workflow_dispatch:
 
 jobs:

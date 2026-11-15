@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mini Projector</string>
+    <string name="project_with">Project on the wall</string>
+    <string name="tagline">Turn your phone into a projector with a box and a magnifying glass.</string>
+
+    <string name="section_project">Project</string>
+    <string name="pick_image">Project a photo</string>
+    <string name="pick_video">Project a video</string>
+    <string name="replay">Project the last one again</string>
+    <string name="show_pattern">Focus chart</string>
+
+    <string name="section_lens">Lens settings</string>
+    <string name="flip_vertical">Flip top to bottom</string>
+    <string name="flip_horizontal">Flip left to right (mirror)</string>
+    <string name="flip_hint">The lens shows the picture upside down: keep \"Flip top to bottom\" on. Show the focus chart: if the words read the wrong way on the wall, change these settings.</string>
+
+    <string name="section_build">Build the projector</string>
+    <string name="build_steps">1. A shoebox (or any box), painted or lined in black inside.\n2. Cut a hole at one end and fit a magnifying glass or a Fresnel lens (A4 sheet lens, about €5).\n3. Lock screen rotation, set the phone in landscape, screen towards the lens, on a support that slides inside the box.\n4. Make the room completely dark and point the box at a white wall 1 to 2 m away.\n5. Open the focus chart and slide the phone forwards or backwards until the lines are sharp.</string>
+
+    <string name="section_gestures">On the projection screen</string>
+    <string name="gestures">• Tap: show or hide the buttons.\n• Pinch: zoom. Drag: move the picture.\n• Double tap: recentre.\n• Keystone: straightens the picture when the box points up or down.\nThe screen stays on at full brightness.</string>
+
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="control_flip_v">↕ Flip</string>
+    <string name="control_flip_h">↔ Mirror</string>
+    <string name="zoom_out">Zoom out</string>
+    <string name="zoom_in">Zoom in</string>
+    <string name="control_pattern">Chart</string>
+    <string name="control_reset">Reset</string>
+    <string name="control_close">Close</string>
+    <string name="keystone_value">Keystone %1$d°</string>
+    <string name="open_failed">Unable to open this file.</string>
+
+    <string name="pattern_top">TOP</string>
+    <string name="pattern_left">LEFT</string>
+    <string name="pattern_right">RIGHT</string>
+    <string name="pattern_hint">Move the phone until the lines are sharp</string>
+</resources>

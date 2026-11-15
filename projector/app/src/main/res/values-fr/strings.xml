@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mini Projecteur</string>
+    <string name="project_with">Projeter sur le mur</string>
+    <string name="tagline">Transformez votre téléphone en projecteur avec une boîte et une loupe.</string>
+
+    <string name="section_project">Projeter</string>
+    <string name="pick_image">Projeter une photo</string>
+    <string name="pick_video">Projeter une vidéo</string>
+    <string name="replay">Projeter à nouveau le dernier fichier</string>
+    <string name="show_pattern">Mire de mise au point</string>
+
+    <string name="section_lens">Réglages de la lentille</string>
+    <string name="flip_vertical">Retourner haut / bas</string>
+    <string name="flip_horizontal">Retourner gauche / droite (miroir)</string>
+    <string name="flip_hint">La lentille affiche l\'image la tête en bas : laissez « Retourner haut / bas » activé. Affichez la mire : si les mots sont à l\'envers sur le mur, changez ces réglages.</string>
+
+    <string name="section_build">Fabriquer le projecteur</string>
+    <string name="build_steps">1. Une boîte à chaussures (ou un carton), peinte ou tapissée de noir à l\'intérieur.\n2. Découpez un trou à une extrémité et fixez-y une loupe ou une lentille de Fresnel (loupe format A4, environ 5 €).\n3. Verrouillez la rotation de l\'écran, posez le téléphone en paysage, écran vers la lentille, sur un support qui coulisse dans la boîte.\n4. Faites le noir complet et orientez la boîte vers un mur blanc à 1 ou 2 m.\n5. Affichez la mire et avancez ou reculez le téléphone jusqu\'à ce que les traits soient nets.</string>
+
+    <string name="section_gestures">Sur l\'écran de projection</string>
+    <string name="gestures">• Toucher : afficher ou masquer les boutons.\n• Pincer : zoomer. Glisser : déplacer l\'image.\n• Toucher deux fois : recentrer.\n• Trapèze : redresse l\'image quand la boîte vise vers le haut ou le bas.\nL\'écran reste allumé à luminosité maximale.</string>
+
+    <string name="play">Lecture</string>
+    <string name="pause">Pause</string>
+    <string name="control_flip_v">↕ Retourner</string>
+    <string name="control_flip_h">↔ Miroir</string>
+    <string name="zoom_out">Dézoomer</string>
+    <string name="zoom_in">Zoomer</string>
+    <string name="control_pattern">Mire</string>
+    <string name="control_reset">Réinitialiser</string>
+    <string name="control_close">Fermer</string>
+    <string name="keystone_value">Trapèze %1$d°</string>
+    <string name="open_failed">Impossible d\'ouvrir ce fichier.</string>
+
+    <string name="pattern_top">HAUT</string>
+    <string name="pattern_left">GAUCHE</string>
+    <string name="pattern_right">DROITE</string>
+    <string name="pattern_hint">Déplacez le téléphone jusqu\'à ce que les traits soient nets</string>
+</resources>
