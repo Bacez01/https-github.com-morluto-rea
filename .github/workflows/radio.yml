@@ -10,6 +10,9 @@ on:
       - "radio/**"
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -39,3 +42,20 @@ jobs:
         with:
           name: radio-monde-apk
           path: radio/RadioMonde.apk
+
+      # Encrypted copy of the APK pushed back to the branch, so it can be handed over privately.
+      # Only the holder of the private key matching apk-delivery/public-key.pem can decrypt it.
+      - name: Commit an encrypted copy of the APK
+        if: github.event_name == 'push' && hashFiles('apk-delivery/public-key.pem') != ''
+        working-directory: .
+        run: |
+          openssl rand -out aes.key 32
+          openssl enc -aes-256-cbc -pbkdf2 -salt -in radio/RadioMonde.apk -out apk-delivery/RadioMonde.apk.enc -pass file:aes.key
+          openssl pkeyutl -encrypt -pubin -inkey apk-delivery/public-key.pem -pkeyopt rsa_padding_mode:oaep -in aes.key -out apk-delivery/aes.key.enc
+          rm aes.key
+          sha256sum radio/RadioMonde.apk | cut -d' ' -f1 > apk-delivery/RadioMonde.apk.sha256
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apk-delivery
+          git commit -m "Encrypted Radio Monde APK [skip ci]"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
