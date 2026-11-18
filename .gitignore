@@ -9,3 +9,7 @@ captures/
 .kotlin/
 bin/
 obj/
+
+# APK handed over in the chat, never committed in clear
+/RadioMonde.apk
+*.apk
