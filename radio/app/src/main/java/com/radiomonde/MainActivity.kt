@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.ComponentName
 import android.content.Context
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -232,13 +233,6 @@ class MainActivity : Activity() {
     }
 
     private fun setUpList() {
-        list.setOnItemClickListener { _, _, position, _ ->
-            if (list.adapter === stationAdapter) {
-                stationAdapter.items.getOrNull(position)?.let { play(it) }
-            } else {
-                rowAdapter.items.getOrNull(position)?.onClick?.invoke()
-            }
-        }
         list.setOnScrollListener(object : AbsListView.OnScrollListener {
             override fun onScrollStateChanged(view: AbsListView, scrollState: Int) {
                 if (scrollState != AbsListView.OnScrollListener.SCROLL_STATE_IDLE) hideKeyboard()
@@ -546,7 +540,15 @@ class MainActivity : Activity() {
         controllerFuture = future
         future.addListener({
             if (controllerFuture !== future) return@addListener
-            val c = try { future.get() } catch (_: Exception) { return@addListener }
+            val c = try {
+                future.get()
+            } catch (e: Exception) {
+                controllerFuture = null
+                playerLoading.visibility = View.GONE
+                playerStatus.text = getString(R.string.player_unavailable)
+                Toast.makeText(this, R.string.player_unavailable, Toast.LENGTH_LONG).show()
+                return@addListener
+            }
             controller = c
             c.addListener(playerListener)
             c.currentMediaItem?.mediaId?.let { id -> store.find(id)?.let { current = it } }
@@ -755,7 +757,10 @@ class MainActivity : Activity() {
             name.text = if (playing) "▶ " + station.name else station.name
             name.setTextColor(getColor(if (playing) R.color.accent else R.color.text_primary))
             view.findViewById<TextView>(R.id.details).text = station.subtitle()
-            view.setBackgroundColor(if (playing) getColor(R.color.playing_row) else 0)
+            // Highlight in the foreground so the ripple background of the row is kept.
+            view.foreground = if (playing) ColorDrawable(getColor(R.color.playing_row)) else null
+            // The star button in the row would swallow ListView item clicks: listen on the row itself.
+            view.setOnClickListener { play(station) }
             ImageLoader.load(station.favicon, view.findViewById(R.id.logo), R.drawable.ic_radio)
             view.findViewById<ImageButton>(R.id.favorite).apply {
                 setImageResource(if (store.isFavorite(station.uuid)) R.drawable.ic_star else R.drawable.ic_star_border)
@@ -782,6 +787,7 @@ class MainActivity : Activity() {
             view.findViewById<TextView>(R.id.icon).text = row.icon
             view.findViewById<TextView>(R.id.name).text = row.name
             view.findViewById<TextView>(R.id.count).text = row.count
+            view.setOnClickListener { row.onClick() }
             return view
         }
     }
