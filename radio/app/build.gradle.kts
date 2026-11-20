@@ -1,10 +1,15 @@
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.Locale
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
 
-val buildDate: String = java.time.LocalDate.now(java.time.ZoneId.of("Europe/Paris"))
-    .format(java.time.format.DateTimeFormatter.ofPattern("d MMMM yyyy", java.util.Locale.FRENCH))
+val buildDate: String = LocalDate.now(ZoneId.of("Europe/Paris"))
+    .format(DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.FRENCH))
 
 android {
     namespace = "com.radiomonde"
