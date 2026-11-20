@@ -27,6 +27,7 @@ import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
@@ -136,6 +137,7 @@ class MainActivity : Activity() {
 
         retryButton.setOnClickListener { retry?.invoke() }
         sleepButton.setOnClickListener { showSleepDialog() }
+        findViewById<View>(R.id.settingsButton).setOnClickListener { showSettingsMenu(it) }
         playerPlay.setOnClickListener { togglePlayback() }
         playerFavorite.setOnClickListener { current?.let { toggleFavorite(it) } }
         player.setOnClickListener { togglePlayback() }
@@ -692,6 +694,32 @@ class MainActivity : Activity() {
         playerPlay.setImageResource(if (wantsToPlay) R.drawable.ic_pause else R.drawable.ic_play)
         playerPlay.contentDescription = getString(if (wantsToPlay) R.string.action_pause else R.string.action_play)
         stationAdapter.notifyDataSetChanged()
+    }
+
+    // ---------------------------------------------------------------- settings
+
+    private fun showSettingsMenu(anchor: View) {
+        PopupMenu(this, anchor).apply {
+            menu.add(0, 1, 0, R.string.sleep_title)
+            menu.add(0, 2, 1, R.string.about)
+            setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    1 -> showSleepDialog()
+                    2 -> showAbout()
+                }
+                true
+            }
+            show()
+        }
+    }
+
+    private fun showAbout() {
+        AlertDialog.Builder(this)
+            .setIcon(R.mipmap.ic_launcher)
+            .setTitle(R.string.about_title)
+            .setMessage(getString(R.string.about_text, BuildConfig.VERSION_NAME, BuildConfig.BUILD_DATE))
+            .setPositiveButton(android.R.string.ok, null)
+            .show()
     }
 
     // ---------------------------------------------------------------- sleep timer

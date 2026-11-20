@@ -48,4 +48,8 @@
     <string name="action_favorite">Favori</string>
     <string name="country_set">Accueil : radios de %1$s</string>
     <string name="player_unavailable">Le lecteur audio n\'a pas pu démarrer. Fermez et rouvrez l\'application.</string>
+    <string name="settings">Paramètres</string>
+    <string name="about">À propos</string>
+    <string name="about_title">À propos de Radio Monde</string>
+    <string name="about_text">Propriété : Ysoft (Yao.Y)\n\nRéalisé par : Claude (I.A.)\n\nVersion : %1$s\n\nMise à jour : %2$s</string>
 </resources>

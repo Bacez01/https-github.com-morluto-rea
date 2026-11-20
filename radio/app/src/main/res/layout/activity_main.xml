@@ -37,6 +37,14 @@
             android:text="@string/sleep_button"
             android:textColor="@color/header_text_dim"
             android:textSize="14sp" />
+
+        <ImageButton
+            android:id="@+id/settingsButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/settings"
+            android:src="@drawable/ic_more" />
     </LinearLayout>
 
     <!-- Tabs -->

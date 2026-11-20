@@ -3,6 +3,9 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
+val buildDate: String = java.time.LocalDate.now(java.time.ZoneId.of("Europe/Paris"))
+    .format(java.time.format.DateTimeFormatter.ofPattern("d MMMM yyyy", java.util.Locale.FRENCH))
+
 android {
     namespace = "com.radiomonde"
     compileSdk = 35
@@ -11,8 +14,14 @@ android {
         applicationId = "com.radiomonde"
         minSdk = 26
         targetSdk = 35
-        versionCode = 2
-        versionName = "1.0.1"
+        versionCode = 3
+        versionName = "1.1"
+        // Date shown in the "À propos" screen, e.g. "20 novembre 2026" (French time).
+        buildConfigField("String", "BUILD_DATE", "\"$buildDate\"")
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {
