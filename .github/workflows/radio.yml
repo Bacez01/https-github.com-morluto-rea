@@ -43,6 +43,19 @@ jobs:
           name: radio-monde-apk
           path: radio/RadioMonde.apk
 
+      # Direct download link, always the latest version:
+      # https://github.com/<owner>/<repo>/releases/download/radio-monde/RadioMonde.apk
+      - name: Publish the APK as a release
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete radio-monde --yes --cleanup-tag || true
+          gh release create radio-monde RadioMonde.apk \
+            --target "$GITHUB_SHA" \
+            --title "Radio Monde" \
+            --notes "Touchez RadioMonde.apk ci-dessous pour le télécharger, puis ouvrez-le pour installer l'application."
+
       # Encrypted copy of the APK pushed back to the branch, so it can be handed over privately.
       # Only the holder of the private key matching apk-delivery/public-key.pem can decrypt it.
       - name: Commit an encrypted copy of the APK

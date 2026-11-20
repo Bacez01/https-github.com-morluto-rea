@@ -19,9 +19,10 @@ avec les radios **françaises** mises en avant à l'ouverture.
 
 ## Installation sur le téléphone
 
-1. Sur GitHub, onglet **Actions** → dernier build **« Build Radio Monde »** réussi →
-   en bas, artefact **`radio-monde-apk`** (fichier zip contenant `RadioMonde.apk`).
-2. Ouvrir le zip sur le téléphone puis `RadioMonde.apk`.
+1. Sur le téléphone, ouvrir le lien direct (toujours la dernière version) :
+   https://github.com/Bacez01/https-github.com-morluto-rea/releases/download/radio-monde/RadioMonde.apk
+   (ou la page **Releases** du dépôt → **Radio Monde** → `RadioMonde.apk`).
+2. Ouvrir le fichier téléchargé.
 3. Android demande d'autoriser l'installation d'applis depuis cette source : accepter, puis **Installer**.
 
 Aucune autorisation spéciale n'est nécessaire à l'ouverture.

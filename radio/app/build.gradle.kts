@@ -19,14 +19,25 @@ android {
         applicationId = "com.radiomonde"
         minSdk = 26
         targetSdk = 35
-        versionCode = 3
-        versionName = "1.1"
+        versionCode = 4
+        versionName = "1.2"
         // Date shown in the "À propos" screen, e.g. "20 novembre 2026" (French time).
         buildConfigField("String", "BUILD_DATE", "\"$buildDate\"")
     }
 
     buildFeatures {
         buildConfig = true
+    }
+
+    // Same signing key on every build (the default debug key is random on each GitHub runner),
+    // so a new version installs over the previous one instead of being refused.
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
     }
 
     buildTypes {
